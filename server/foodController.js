@@ -130,8 +130,9 @@ module.exports = {
     },
 
     replayGame: (req, res) => {
-        let fId  = req.params.id, resImg,
-            food = foods.filter(v => v.id === fId)[0] 
+        let fId  = req.params.id/1, 
+            food = foods.filter(v => v.id === fId)[0]
+        console.log(food, fId)
         axios.get(`https://trackapi.nutritionix.com/v2/search/instant?query=${food.name}`,
         {"headers": {
             "x-app-key": `${process.env.API_KEY1}`,
@@ -146,7 +147,6 @@ module.exports = {
     getMacros: (req, res) => {
         let checkId = req.params.id,
             fname   = foods[checkId].name
-            console.log(fname)
         axios({
             method: "post",
             url: "https://trackapi.nutritionix.com/v2/natural/nutrients", 
@@ -159,6 +159,18 @@ module.exports = {
             res.status(200).send({ p, c, f })
         })
     },
+
+    getRecipe: (req, res) => {
+        axios.get(`https://api.edamam.com/search?q=${req.params.id}&app_id=${process.env.API_ID3}&app_key=${process.env.API_KEY3}`).then(results => {
+            let p = ~~results.data.hits[0].recipe.totalNutrients.PROCNT,
+                c = ~~results.data.hits[0].recipe.totalNutrients.CHOCDF,
+                f = ~~results.data.hits[0].recipe.totalNutrients.FAT,
+                img = results.data.hits[0].recipe.image,
+                recipeLink = results.data.hits[0].recipe.url,
+                recipe = results.data.hits[0].recipe.label
+            res.status(200).send({ p, c, f, img, recipe, recipeLink })
+        })
+    }
 
     starR: (req, res) => {
         let starId = req.params.id,

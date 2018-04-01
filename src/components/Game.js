@@ -2,56 +2,47 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Header from './Header'
 import './css/Game.css'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
+
 
 
 class Game extends Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             id: '',
             macro: '',
             img: '',
             name: '',
             message: '',
-            isPlaying: true,
+            gameMsg: '',
             protein: '',
             carb: '',
-            fat: ''
+            fat: '',
+            open: false
         }
-        this.guess     = this.guess.bind(this)
-        this.getMacros = this.getMacros.bind(this)
-        this.success   = this.success.bind(this)
-        this.niceTry   = this.niceTry.bind(this)
-        this.newGame   = this.newGame.bind(this)
+        this.guess         = this.guess.bind(this)
+        this.getMacros     = this.getMacros.bind(this)
+        this.success       = this.success.bind(this)
+        this.niceTry       = this.niceTry.bind(this)
+        this.newGame       = this.newGame.bind(this)
+        this.handleClose   = this.handleClose.bind(this)
     }
 
     componentDidMount() {
-        this.newGame()
+        if(this.props.location.state){
+            console.log(this.props.location.state)
+            this.replayGame()
+        } else{
+            this.newGame() 
+        }
     }
 
-    guess(val) {
-        const { macro } = this.state
-        macro.includes(val) ? this.success() : this.niceTry()
-        this.getMacros()
-        this.setState({
-            isPlaying: false,
-        })
-    }
-
-    replayGame() {
-        const { foodId } = this.props.location.state
-        axios.get(`/api/foods/${foodId}`).then(res => {
-            this.setState({
-                id: res.data.id,
-                macro: res.data.macro,
-                img: res.data.resImg,
-                name: res.data.resName,
-                message: res.data.message,
-                isPlaying: true
-            })
-        })
-    }
-
+    
+    
     newGame() {
         axios.get('/api/foods/game').then(res => {
             this.setState({
@@ -64,10 +55,33 @@ class Game extends Component {
             })
         })
     }
+    
+    replayGame() {
+        const { foodId } = this.props.location.state
+        axios.get(`/api/foods/game/replay/${foodId/1}`).then(res => {
+            this.setState({
+                id: res.data.id,
+                macro: res.data.macro,
+                img: res.data.resImg,
+                name: res.data.name,
+                message: res.data.message,
+                isPlaying: true
+            })
+        })
+    }
+    
+    guess(val) {
+        const { macro } = this.state
+        macro.includes(val) ? this.success() : this.niceTry()
+        this.getMacros()
+        this.setState({
+            isPlaying: false,
+        })
+    }
 
     getMacros() {
         
-        axios.get(`/api/foods/game/replay/${this.state.id}`).then(res => {
+        axios.get(`/api/foods/game/${this.state.id}`).then(res => {
             this.setState({
                 protein: res.data.p,
                 fat: res.data.f,
@@ -77,15 +91,41 @@ class Game extends Component {
     }
 
     success() {
-        alert("Great job!")
+        this.setState({
+            open: true,
+            gameMsg: "Nice job!"
+        })
     }
 
     niceTry() {
-        alert("Nice try. Check out the message for some explanation and you'll surely get it next time:)")
+        this.setState({
+            open: true,
+            gameMsg: "Not quite!"
+        })
     }
 
+    handleClose() {
+        this.setState({
+            open: false
+        })
+    }
+
+
     render() {
-        const { name, img, isPlaying, message, protein, fat, carb } = this.state
+        const { name, img, isPlaying, message, protein, fat, carb, gameMsg, open } = this.state
+        const actions = [
+            <FlatButton
+              label="Play Again?"
+              primary={true}
+              onClick={this.newGame}
+            />,
+            <FlatButton
+              label="Close"
+              primary={true}
+              onClick={this.handleClose}
+            />,
+          ];
+      
         return(
             <div className="game">
                 <Header />
@@ -98,26 +138,26 @@ class Game extends Component {
                     <button onClick={ () => this.guess('protein')}>Protein</button>
                     <button onClick={ () => this.guess('carb')}>Carb</button>
                 </section>
-                
-                {isPlaying ? null : (
-                <div className="game-over">
-                    <h3>Actual Macros</h3>
-                    <p>
-                        Protein: {protein}
-                    </p>
-                    <p>
-                        Fat: {fat}
-                    </p>
-                    <p>
-                        Carb: {carb}
-                    </p>
-                    <p className="message">
-                        { message }
-                    </p>
-                    <button className="play-again" onClick={this.newGame}>
-                        Play Again?
-                    </button>
-                </div>)}
+                <MuiThemeProvider>
+                    <Dialog title={gameMsg} actions={actions} modal={false} open={open} onRequestClose={this.handleClose} >
+                        <div className="game-over">
+                            <h3>Actual Macros</h3>
+                            <p>
+                                Protein: {protein}
+                            </p>
+                            <p>
+                                Fat: {fat}
+                            </p>
+                            <p>
+                                Carb: {carb}
+                            </p>
+                            <p className="message">
+                                { message }
+                            </p>
+                            
+                        </div>
+                    </Dialog>
+                </MuiThemeProvider>
             </div>
         )
     }

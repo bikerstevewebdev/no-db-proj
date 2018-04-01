@@ -21,6 +21,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # apis
+# 1 - nutritionix
+# 2 - unsplash
+# https://api.unsplash.com/photos/random?query=food&client_id=51e859d1f882eebd46b6f09d3fd3fd2b300ad609ce524f6573267789dda7733f&count=2&w=300&h=250
+# 3 - edamam
 .env
 
 

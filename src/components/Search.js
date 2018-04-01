@@ -3,6 +3,10 @@ import Replay from './Replay'
 import axios from 'axios'
 import Header from './Header'
 import './css/Search.css'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
 
 
 class Search extends Component {
@@ -13,7 +17,14 @@ class Search extends Component {
             searchInput: '',
             nameInput: '',
             messageInput: '',
-            macroInput: ''
+            macroInput: '',
+            recipe: '',
+            recipeP: '',
+            recipeF: '',
+            recipeC: '',
+            recipeImg: '',
+            recipeLink: '',
+            open: false
         }
         this.updateInput = this.updateInput.bind(this)
         this.updateNameInput = this.updateNameInput.bind(this)
@@ -24,6 +35,7 @@ class Search extends Component {
         this.search = this.search.bind(this)
         this.removeFood = this.removeFood.bind(this)
         this.addFood = this.addFood.bind(this)
+        this.getRecipe = this.getRecipe.bind(this)
     }
 
 
@@ -113,6 +125,26 @@ class Search extends Component {
         })
     }
 
+    getRecipe(id) {
+        axios.get(`/api/foods/replay/recipe/${id}`).then(res => {
+            this.setState({
+                open: true,
+                recipeImg: res.data.img,
+                recipeP: res.data.p,
+                recipeF: res.data.f,
+                recipeC: res.data.c,
+                recipeLink: res.data.recipeLink,
+                recipe: res.data.recipe
+            })
+        })
+    }
+
+    handleClose() {
+        this.setState({
+            open: false
+        })
+    }
+
 
     render() {
         const replayArr = this.state.replays.map((v, i) => {
@@ -147,8 +179,8 @@ class Search extends Component {
                     </section>
                     <form className="add-item">
                         <input placeholder="Food Name" type="text" onChange={this.updateNameInput}/>
-                        <input onChange={this.updateMessageInput} placeholder="An informational tid bit to pass along." type="text-box"/>
                         <input value={this.state.macroInput} onChange={this.updateMacroInput} placeholder={`Predominant macro, either "protein", "carb", or "fat".`}/>
+                        <input onChange={this.updateMessageInput} placeholder="An informational tid bit to pass along." type="text-area"/>
                         <button className="send-it" type="submit" onClick={this.addFood}>Send it!</button>
                     </form>
                 </div>
