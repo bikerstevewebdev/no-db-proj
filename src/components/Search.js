@@ -11,9 +11,6 @@ class Search extends Component {
         this.state = {
             replays: [],
             searchInput: '',
-            pInput: '',
-            fInput: '',
-            cInput: '',
             nameInput: '',
             messageInput: '',
             macroInput: ''
@@ -25,6 +22,8 @@ class Search extends Component {
         this.getReplays = this.getReplays.bind(this)
         this.setFav = this.setFav.bind(this)
         this.search = this.search.bind(this)
+        this.removeFood = this.removeFood.bind(this)
+        this.addFood = this.addFood.bind(this)
     }
 
 
@@ -75,6 +74,14 @@ class Search extends Component {
         })
     }
 
+    removeFood(id) {
+        axios.delete(`/api/foods/replay/${id}`).then(res => {
+            this.setState({
+                replays: res.data
+            })
+        })
+    }
+
     search(e) {
         const { searchInput } = this.state
         console.log("Testing search readiness", searchInput)
@@ -96,10 +103,20 @@ class Search extends Component {
             }
     }
 
+    addFood() {
+        const { nameInput, macroInput, messageInput } = this.state
+        axios.post('/api/foods', {name: nameInput, macro: macroInput, message: messageInput}).then(res => {
+            this.setState({
+                replays: res.data,
+
+            })
+        })
+    }
+
 
     render() {
         const replayArr = this.state.replays.map((v, i) => {
-            return (<Replay isFav={v.isFav} makeFav={this.setFav} keyId={i} key={`item-${i}`} name={v.name} />)
+            return (<Replay removeFood={this.removeFood} isFav={v.isFav} makeFav={this.setFav} keyId={i} key={`item-${i}`} name={v.name} />)
         })
         return(
             <div className="search-page">
@@ -130,7 +147,7 @@ class Search extends Component {
                     </section>
                     <form className="add-item">
                         <input placeholder="Food Name" type="text" onChange={this.updateNameInput}/>
-                        <input placeholder="An informational tid bit to pass along." type="text-box"/>
+                        <input onChange={this.updateMessageInput} placeholder="An informational tid bit to pass along." type="text-box"/>
                         <input value={this.state.macroInput} onChange={this.updateMacroInput} placeholder={`Predominant macro, either "protein", "carb", or "fat".`}/>
                         <button className="send-it" type="submit" onClick={this.addFood}>Send it!</button>
                     </form>

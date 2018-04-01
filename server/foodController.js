@@ -186,6 +186,8 @@ module.exports = {
             isFav: false,
             id: foods.length
         }
+        console.log(newFood)
+        foods.push(newFood)
         res.status(200).send(foods)
     },
     
