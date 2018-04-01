@@ -1,0 +1,23 @@
+.game{
+    text-align: center;
+    height: 100vh;
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1464895216333-d859b45bf394?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3204895a6d4e0fdf0de403f5a2410c31&auto=format&fit=crop&w=500&q=60') no-repeat ;
+    background-size: cover;
+}
+
+.game-header{
+    display: flex;
+    height: 25vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 9vh;
+}
+
+.btns{
+    display: flex;
+    height: 25vh;
+    justify-content: space-around;
+    align-items: center
+}

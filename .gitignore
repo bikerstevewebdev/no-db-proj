@@ -1,0 +1,27 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# apis
+.env
+
+
+# https://api.unsplash.com/photos/random?query=food&client_id=51e859d1f882eebd46b6f09d3fd3fd2b300ad609ce524f6573267789dda7733f&count=2&w=300&h=250
