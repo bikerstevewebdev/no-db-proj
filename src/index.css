@@ -10,6 +10,10 @@ body {
   height: 100%;
 }
 
+/* .links{
+  display: flex;
+} */
+
 .nav{
   display: flex;
   width: 100%;
@@ -27,8 +31,6 @@ body {
 .nav #links{
   text-decoration: none;
   color: pink;
-  /* border: 2px solid red;
-  border-radius: 20%; */
   height: 100%;
   padding: 18px 30px;
   width: 100px;

@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv').config()
 const fc = require('./foodController')
+const userC = require('./userController')
 
 const app = express()
 
@@ -45,7 +46,7 @@ app.get('/api/foods/replay', fc.sendReplays)
 
 /***********************************************************************************/
 // Return recipe
-app.get('/api/foods/replay/recipe/:id', fc.getRecipe)
+app.get('/api/foods/replay/recipe', fc.getRecipe)
 /***********************************************************************************/
 
 /***********************************************************************************/
@@ -63,6 +64,20 @@ app.post('/api/foods', fc.addFood)
 app.delete('/api/foods/replay/:id', fc.destroy)
 /***********************************************************************************/
 
+/***********************************************************************************/
+// Login user
+app.post('/api/users/login', userC.login)
+/***********************************************************************************/
+
+/***********************************************************************************/
+// Create new user
+app.post('/api/users/signup', userC.newUser)
+/***********************************************************************************/
+
+/***********************************************************************************/
+// Add fav to user
+app.post('/api/users/fav', userC.addFav)
+/***********************************************************************************/
 
 
 app.listen(3007, () => {

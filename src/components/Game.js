@@ -51,7 +51,6 @@ class Game extends Component {
                 img: res.data.resImg,
                 name: res.data.name,
                 message: res.data.message,
-                isPlaying: true
             })
         })
     }
@@ -65,7 +64,6 @@ class Game extends Component {
                 img: res.data.resImg,
                 name: res.data.name,
                 message: res.data.message,
-                isPlaying: true
             })
         })
     }
@@ -75,7 +73,6 @@ class Game extends Component {
         macro.includes(val) ? this.success() : this.niceTry()
         this.getMacros()
         this.setState({
-            isPlaying: false,
         })
     }
 
@@ -112,7 +109,7 @@ class Game extends Component {
 
 
     render() {
-        const { name, img, isPlaying, message, protein, fat, carb, gameMsg, open } = this.state
+        const { name, img, message, protein, fat, carb, gameMsg, open } = this.state
         const actions = [
             <FlatButton
               label="Play Again?"

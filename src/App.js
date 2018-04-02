@@ -15,10 +15,8 @@ class App extends Component {
       img1Pro: '',
       img2: '',
       img2Pro: '',
-      isPlaying: false
+
     }
-    // this.addReplay = this.addReplay.bind(this)
-    // this.playGame = this.playGame.bind(this)
   }
 
   componentDidMount() {
