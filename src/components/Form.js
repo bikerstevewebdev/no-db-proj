@@ -56,20 +56,20 @@ class Form extends Component {
                 <section className="login">
                     <input placeholder="Username" onChange={this.updateUserIn} className="username" value={this.state.userSignIn} /> 
                     <input placeholder="Password" type="password" onChange={this.updatePassIn} className="password" value={this.state.passSignIn} /> 
-                    <button onClick={() => this.props.signIn(userSignIn, passSignIn)}>Sign In</button>
+                    <button className="sign-button" onClick={() => this.props.signIn(userSignIn, passSignIn)}>Sign In</button>
                     <section className="is-member">
-                        <p className="message">Not a member yet? Sign up!</p>
-                        <button onClick={this.props.changeMember}>Sign Up!</button>
+                        <p className="sign-message">Not a member yet? Sign up!</p>
+                        <button className="sign-button" onClick={this.props.changeMember}>Sign Up!</button>
                     </section>                
                 </section>
                 :
                 <section className="signup">                
                     <input placeholder="Username" onChange={this.updateUserUp} className="username" value={this.state.userSignUp} /> 
                     <input placeholder="Password" type="password" onChange={this.updatePassUp} className="password" value={this.state.passSignUp} /> 
-                    <button onClick={() => this.props.signUp(passSignUp, userSignUp)}>Sign Up</button>
+                    <button className="sign-button" onClick={() => this.props.signUp(passSignUp, userSignUp)}>Sign Up</button>
                     <section className="is-member">
-                        <p className="message">Already a member?</p>
-                        <button onClick={this.props.changeMember}>Sign In!</button>
+                        <p className="sign-message">Already a member?</p>
+                        <button className="sign-button" onClick={this.props.changeMember}>Sign In!</button>
                     </section>
                 </section>
                 }

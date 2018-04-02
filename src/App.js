@@ -87,7 +87,7 @@ class App extends Component {
           <h3 className="how-to-h3">How to Play</h3>
           <p className="instructions">When  you see the food displayed on the page, try to guess which macro is the prime makeup of that food item. But watch out! Some might surprise you. When you have clicked on a macro button, the answer will be revealed. Take the time to read the message to learn a nice tid bit about the food before clicking "Play Again" to test your knowledge on other food.</p>
         </section>
-        <button className="play-btn"><Link className="play-btn" to="/game">Play Game!</Link></button>
+        <button className="play-btn"><Link  to="/game">Play Game!</Link></button>
       </div>
     )
   }

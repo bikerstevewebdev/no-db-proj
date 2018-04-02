@@ -355,3 +355,72 @@ input[type="text-area"]{
     display: flex;
 }
 
+.sign-button {
+    -webkit-border-radius: 17;
+    -moz-border-radius: 17;
+    border-radius: 17px;
+    text-shadow: 2px 1px 3px #1c7da3;
+    font-family: Arial;
+    color: #030a08;
+    background: #224ce37e;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    border: none;
+  }
+  
+  .sign-button:hover {
+    background: #00f74a;
+    background-image: -webkit-linear-gradient(top, #00f74a, #137d28);
+    background-image: -moz-linear-gradient(top, #00f74a, #137d28);
+    background-image: -ms-linear-gradient(top, #00f74a, #137d28);
+    background-image: -o-linear-gradient(top, #00f74a, #137d28);
+    background-image: linear-gradient(to bottom, #00f74a, #137d28);
+    text-decoration: none;
+  }
+
+  .sign-message{
+      background-color: rgba(155, 153, 35, 0.479);
+    border-radius: 10px;
+  }
+
+  #pick{
+      font-size: 1.5em;
+      border-radius: 15px;
+      background-color: rgba(99, 61, 61, 0.486);
+      color: rgba(0, 253, 253, 0.712);
+      text-shadow: rgb(7, 7, 7) 2px 2px 2px;
+  }
+
+  .password, .username{
+      border: none;
+      text-align: center;
+      border-radius: 5px;
+  }
+  .password{
+      margin-left: 5px;
+  }
+  .fa-search {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+  .fa-search:hover, .fa-search:focus, .fa-search:active {
+    -webkit-animation-name: hvr-bob-float, hvr-bob;
+    animation-name: hvr-bob-float, hvr-bob;
+    -webkit-animation-duration: .3s, 1.5s;
+    animation-duration: .3s, 1.5s;
+    -webkit-animation-delay: 0s, .3s;
+    animation-delay: 0s, .3s;
+    -webkit-animation-timing-function: ease-out, ease-in-out;
+    animation-timing-function: ease-out, ease-in-out;
+    -webkit-animation-iteration-count: 1, infinite;
+    animation-iteration-count: 1, infinite;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-direction: normal, alternate;
+    animation-direction: normal, alternate;
+    background-color: #0b9b17a6;
+    
+  }

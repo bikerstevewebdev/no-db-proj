@@ -17,7 +17,7 @@
 
 .game-header img{
     width: 300px;
-    height: 300px;
+    height: auto;
 }
 
 .game-header h2{
