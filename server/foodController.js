@@ -9,6 +9,8 @@
 
 const axios = require('axios')
 const trash = []
+let users = []
+
 
 let foods = [{
     name: "eggs",
@@ -98,21 +100,27 @@ const dotenv = require('dotenv').config()
 let resImg = ''
 let p = '',
     c = '',
-    f = ''
+    f = '',
+    user, userAuth, newUser, newUsers, favs, foodsArr
 
 
 
 
 module.exports = {
-    sendFood: (req, res) => {
-        res.status(200).send(foods)
+    sendFood: (req, resp) => {
+        resp.status(200).send(foods)
+    },
+
+    sendPics: (req, resp) => {
+        axios.get(`https://api.unsplash.com/photos/random?query=food&client_id=${process.env.API_KEY2}&count=2&w=300&h=250`).then(res => {
+            resp.status(200).send(res.data)
+        })
     },
 
     filter: (req, res) => {
         console.log("query has been matched")
         let sName = req.query.name
         let rArr  = foods.filter(v => v.name.includes(sName))
-        console.log(`sName: ${sName}, req.query.name: ${req.query.name}, rArr: ${rArr}`)
         res.status(200).send(rArr)
     },
 
@@ -124,7 +132,6 @@ module.exports = {
             "x-app-key": `${process.env.API_KEY1}`,
             "x-app-id": `${process.env.API_ID1}`
         }}).then(results => {
-            console.log()
             res.status(200).json({ resImg: results.data.common[0].photo.thumb, ...selection })
         })
     },
@@ -179,7 +186,6 @@ module.exports = {
         let starId = req.params.id,
             starF  = foods.splice(starId, 1)[0]
         starF.isFav = !starF.isFav
-        console.log(starF)
         if(starF.isFav){
             foods.unshift(starF)
         } else {
@@ -201,7 +207,6 @@ module.exports = {
             isFav: false,
             id: foods.length
         }
-        console.log(newFood)
         foods.push(newFood)
         res.status(200).send(foods)
     },
@@ -217,6 +222,80 @@ module.exports = {
         foods = newFArr
         
         res.status(200).send(foods)
+    },
+
+    newUser: (req, resp) => {
+        const { name, pass } = req.body
+        if(users.filter(v => v.name === name).length < 1){
+            newUser = {
+                name,
+                password: pass,
+                id: ~~(Math.random() * 1000),
+                favorites: []
+            }
+            // newUsers = users.slice()
+            // newUsers.push(newUser)
+            // users = newUsers
+            users.push(newUser)
+            resp.status(200).send({message: `Welcome ${name}!Your object is ${newUser.name}${newUser.id}${newUser.password}${newUser.favorites}`, auth: true, ...newUser})
+        } else {
+            resp.status(200).send({message: `Error code 403: Username ${name} already exists`, auth: false})
+        }
+    },
+    
+    login: (req, resp) => {
+        if(users.length > 0){
+        user = users.filter(v => {
+            return v.name === req.body.name
+        })[0]
+            if(user){
+                userAuth = user.password === req.body.pass
+                if(user && userAuth){
+                    resp.status(200).send({valid: true, id: user.id})
+                } else if(user && !userAuth){
+                    console.log(user, user.password, user.name, users)
+                resp.status(200).send({valid: false, message: "Error code 403: Invalid Password"})
+                }
+            }      
+        } else {
+            console.log(user)
+            resp.status(200).send({valid: false, message: `Error code 403: Invalid username: ${req.body.name}`})
+        }
+    },
+    
+    addFav: (req, resp) => {
+        console.log(`User ID: ${req.body.userId}`)
+        user = users.find(v => {
+           return v.id === req.body.userId
+        })
+        favs = user.favorites
+        favs.push({
+            name: req.body.userName,
+            id: req.body.id,
+            isFav: true
+        })
+        user.favorites = favs
+        let ind
+        users.forEach((v, i) => {
+            if(v.id === req.body.userId){
+                ind = i
+            }
+        })
+        users.splice(ind, 1, user)
+        let ids = favs.map(v => v.id)
+        console.log(`ids: ${ids}`)
+            foodsArr = foods
+        console.log(foodsArr)
+            let starId = req.body.id,
+            starF  = foodsArr.splice(starId, 1)[0]
+        starF.isFav = !starF.isFav
+        if(starF.isFav){
+            foodsArr.unshift(starF)
+        } else {
+            foodsArr.push(starF)
+        }
+        console.log(`foodsArr: ${foodsArr}`)
+            resp.status(200).send(foodsArr)
     }
 }
 

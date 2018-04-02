@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('unsplash.com').then(res => {
+    axios.get('/api/foods/pics').then(res => {
       let imgOne    = res.data[0].urls.custom,
           imgTwo    = res.data[1].urls.custom,
           imgOnePro = res.data[0].user.name,
@@ -71,7 +71,7 @@ class App extends Component {
             Photo by {img1Pro} on Unsplash
           </figcaption>
         </figure>
-          <h1 className="title">Name That Macro</h1>
+          <h1 className="title"><span id="left-head">N</span>ame That Macro</h1>
         <figure>
             <img src={img2} width="300" height="250" alt="food item 2"/>  
           <figcaption>
@@ -81,7 +81,7 @@ class App extends Component {
         </header>
         <section className="intro">
           <h2 className="head">What's a Macro?</h2>
-          <p className="intro-p">A "macro" is short for macronutrient, meaning one of the larger nutrients that make up one's  diet. The main 3 macros are protein, carbs (carbohydrates) and fat. we won't get too heavy into the details because it can be confusing enough already. Every food contains a certain amount of each macro, and these macros provide a set number of calories per gram present in food: 4 calories per gram of carb and protein each, and 9 calories per gram of fat. A common misunderstanding is what a certain food is made up most of in terms of macros. This game is to help you understand the typical make-up of common foods to help clarify your understanding on a base level of what foods contain more of each macro. read below how to play and click on "Play Game!" when you are ready to learn!</p>
+          <p className="intro-p">A "macro", short for macronutrient, meaning one of the larger nutrients that make up one's  diet. The main 3 macros are protein, carbs (carbohydrates) and fat. we won't get too heavy into the details because it can be confusing enough already. Every food contains a certain amount of each macro, and these macros provide a set number of calories per gram present in food: 4 calories per gram of carb and protein each, and 9 calories per gram of fat. A common misunderstanding is what a certain food is made up most of in terms of macros. This game is to help you understand the typical make-up of common foods to help clarify your understanding on a base level of what foods contain more of each macro. read below how to play and click on "Play Game!" when you are ready to learn!</p>
         </section>
         <section className="how-to">
           <h3 className="how-to-h3">How to Play</h3>

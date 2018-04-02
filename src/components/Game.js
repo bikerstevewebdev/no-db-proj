@@ -51,6 +51,7 @@ class Game extends Component {
                 img: res.data.resImg,
                 name: res.data.name,
                 message: res.data.message,
+                open: false
             })
         })
     }

@@ -63,8 +63,18 @@ class Search extends Component {
         })
     }
 
+    // setFav(favStatus, id) {
+    //     axios.put(`/api/foods/replay/${id}`, { favStatus }).then(res => {
+    //         console.log(res.data[0], res.data[1])
+    //       this.setState({
+    //         replays: res.data
+    //       })
+    //     })
+    // }    
+
     setFav(favStatus, id) {
-        axios.put(`/api/foods/replay/${id}`, { favStatus }).then(res => {
+        const { userId, userName } = this.state
+        axios.put(`/api/foods/replay`, { id, userId, favStatus, userName }).then(res => {
             console.log(res.data[0], res.data[1])
           this.setState({
             replays: res.data
@@ -198,7 +208,7 @@ class Search extends Component {
                     isLoggedIn: true,
                     userName: name,
                     pass,
-                    id: res.data.id
+                    userId: res.data.id
                 })
                 alert(res.data.message)
             } else if(!res.data.auth){
@@ -211,7 +221,7 @@ class Search extends Component {
         const replayArr = this.state.replays.map((v, i) => {
             return (<Replay isLoggedIn={this.state.isLoggedIn} removeFood={this.removeFood} isFav={v.isFav} makeFav={this.setFav} getRecipe={this.getRecipe} keyId={i} key={`item-${i}`} name={v.name} />)
         })
-        const { open, recipeP, recipeC, recipeF, recipe, recipeImg, dietLabels, recipeLink, isLoggedIn } = this.state
+        const { open, recipeP, recipeC, recipeF, recipe, recipeImg, dietLabels, recipeLink, isLoggedIn, isMember } = this.state
         const dietArr = dietLabels.map((v, i) => {
             return <em key={i}>{v}</em>
         })
@@ -224,40 +234,49 @@ class Search extends Component {
           ];
         return(
             <div className="search-page">
-                <div className="bg-img">
-                </div>
-                <Header />
-                <section className="search-header">
-                    {isLoggedIn ? null : <Form signIn={this.signIn} areMember={this.changeMember} signUp={this.signUp} isMember={true} loginStatus={this.checkLogin} />}
-                    <h1 id="pick">Pick a Food!</h1>
-                    <input placeholder="Search by name" value={this.state.searchInput} onChange={this.updateInput} onKeyPress={this.search}
-                    className="search"/>
-                    <a onClick={() => this.search("search")}><i className="fas fa-search"></i></a>
-                    {isLoggedIn ? null : <Form signIn={this.signIn} areMember={this.changeMember} signUp={this.signUp} isMember={false} loginStatus={this.checkLogin} />}
-                </section>
-                <div className="replay-array">
-                    {replayArr}
-                </div>
-
-                <div className="filler">
-                </div>
-
-                <div className="second-img">
-                    <section className="add-message">
-                        <h2 className="cant-find">
-                            Can't find the food you're looking for?
-                        </h2>
-                        <span className="add-it">
-                            Go ahead and add it to the list! Just be sure to do your research and put in the correct information so everybody can benefit:)
-                        </span>
+                <main>
+                    <div className="bg-img">
+                    </div>
+                    <Header />
+                    <section className="search-header">
+                        {isLoggedIn ? null : <Form signIn={this.signIn} changeMember={this.changeMember} signUp={this.signUp} isMember={isMember} loginStatus={this.checkLogin} />}
+                        <h1 id="pick">Pick a Food!</h1>
+                        <input placeholder="Search by name" value={this.state.searchInput} onChange={this.updateInput} onKeyPress={this.search}
+                        className="search"/>
+                        <a onClick={() => this.search("search")}><i className="fas fa-search"></i></a>
+                        {/* {isLoggedIn ? null : <Form signIn={this.signIn} areMember={this.changeMember} signUp={this.signUp} isMember={isMember} loginStatus={this.checkLogin} />} */}
                     </section>
-                    <form className="add-item">
-                        <input placeholder="Food Name" type="text" onChange={this.updateNameInput}/>
-                        <input value={this.state.macroInput} onChange={this.updateMacroInput} placeholder={`Predominant macro, either "protein", "carb", or "fat".`}/>
-                        <input onChange={this.updateMessageInput} placeholder="An informational tid bit to pass along." type="text-area"/>
-                        <button className="send-it" type="submit" onClick={this.addFood}>Send it!</button>
-                    </form>
-                </div>
+                    <div className="replay-array">
+                        {replayArr}
+                    </div>
+
+                    <div className="filler">
+                    </div>
+                    <div className="filler2">
+                    </div>
+                    <div className="filler-2">
+                    </div>
+                    <div className="filler3">
+                    </div>
+                </main>
+                <section className="bottom">
+                    <div className="second-img">
+                        <section className="add-message">
+                            <h2 className="cant-find">
+                                Can't find the food you're looking for?
+                            </h2>
+                            <span className="add-it">
+                                Go ahead and add it to the list! Just be sure to do your research and put in the correct information so everybody can benefit:)
+                            </span>
+                        </section>
+                        <form className="add-item">
+                            <input placeholder="Food Name" type="text" onChange={this.updateNameInput}/>
+                            <input value={this.state.macroInput} onChange={this.updateMacroInput} placeholder={`Predominant macro, either "protein", "carb", or "fat".`}/>
+                            <input onChange={this.updateMessageInput} placeholder="An informational tid bit to pass along." type="text-area"/>
+                            <button className="send-it" type="submit" onClick={this.addFood}>Send it!</button>
+                        </form>
+                    </div>
+                </section>
                 <MuiThemeProvider>
                     <Dialog title={ recipe } actions={ actions } modal={false} open={ open } onRequestClose={this.handleClose} >
                         <div className="recipe">

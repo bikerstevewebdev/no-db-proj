@@ -65,7 +65,7 @@ class Form extends Component {
                 :
                 <section className="signup">                
                     <input placeholder="Username" onChange={this.updateUserUp} className="username" value={this.state.userSignUp} /> 
-                    <input placeholder="Password" type="password" onChange={this.updatePassUp} className="password" value={this.state.passIn} /> 
+                    <input placeholder="Password" type="password" onChange={this.updatePassUp} className="password" value={this.state.passSignUp} /> 
                     <button onClick={() => this.props.signUp(passSignUp, userSignUp)}>Sign Up</button>
                     <section className="is-member">
                         <p className="message">Already a member?</p>

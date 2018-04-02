@@ -2,7 +2,7 @@
   text-align: center;
   height: 100vh;
   position: relative;
-  background: url('https://images.unsplash.com/photo-1464895216333-d859b45bf394?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3204895a6d4e0fdf0de403f5a2410c31&auto=format&fit=crop&w=500&q=60') no-repeat ;
+  background: url('https://images.unsplash.com/photo-1489444444961-d0fda97f0986?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920&h=1080&fit=crop&ixid=eyJhcHBfaWQiOjIzNjgzfQ&s=df674a85c02f3d36607e366c05e2f43b') no-repeat ;
   background-position: center;
   background-size: cover;
 }
@@ -15,14 +15,26 @@
   left: 0;
   display: flex;
   justify-content: center;
+  text-shadow: rgb(20, 19, 19) 4px 2px 10px;
+  
+}
+
+#left-head{
+  text-shadow: rgba(100, 97, 97, 0.363) -2px 2px 8px;
+  font-size: 4.5rem;
+  
 }
 
 img {
   border-radius: 30%
 }
 
+figure{
+  width: 24%
+}
+
 figcaption{
-  color: rgba(221, 221, 221, 0.671);
+  color: rgba(221, 221, 221, 0.541);
   font-style: italic;
 }
 
@@ -35,19 +47,21 @@ figcaption{
   display: flex;
   font-size: large;
   align-items: center;
+  color: rgb(253, 250, 43);
+  text-shadow: rgb(0, 0, 0) 2px 2px 5px;
 }
 
 .intro h2{
   flex-grow: 2;
   width: 25%;
   margin-left: 5vw;
-  color: #d82;
-  
+  color: rgb(14, 35, 158);
+  font-size: 2em;
   /* align-self: center; */
 }
 
 section p{
-  background-color: rgba(238, 237, 237, 0.644)
+  background-color: rgba(238, 237, 237, 0.205)
 }
 
 .intro p{
